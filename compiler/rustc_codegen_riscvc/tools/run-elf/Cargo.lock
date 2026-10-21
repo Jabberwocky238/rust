@@ -287,8 +287,6 @@ dependencies = [
 [[package]]
 name = "riscvc"
 version = "0.2.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c2803afabfbd59af8bbb81a147932c4822d0864b6d8a6585592c22dcfaa146bb"
 dependencies = [
  "clap",
  "mlirformat",
@@ -304,8 +302,6 @@ dependencies = [
 [[package]]
 name = "riscvc-macros"
 version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8475689a25a911b048f6387bcd85e0807da794e598931d2bc745b5174c592034"
 dependencies = [
  "proc-macro2",
  "quote",

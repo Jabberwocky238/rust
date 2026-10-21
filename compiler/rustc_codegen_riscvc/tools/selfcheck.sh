@@ -3,15 +3,18 @@
 # a0 = 失败的检查个数，0 才过（判据同 riscvc 的 tests/rust_e2e.rs，那边走的是 rustc 出 LLVM IR 的老路）。
 # 用法：[MARCH=…] tools/selfcheck.sh [O0|O2]（缺省 O2）
 #   MARCH（缺省 rv32imf_zicsr）：rv32imaf_zicsr 开 A（原子操作那组检查才编）；带 d（rv32imafd_zicsr）⇒ 照内置目标写一份 +d、ilp32d 的 target JSON
-# 环境：RISCVC_SRC（riscvc 源码，要它的 tests/rust；缺省与 rust 检出同级的 riscvc）、RISCVC（riscvc 命令；缺省 PATH 里的，没有就 cargo install）、KEEP=1 留中间产物
+# 环境：RISCVC_SRC（riscvc 源码，要它的 tests/rust；缺省子模块 riscvc/）、RISCVC（riscvc 命令；缺省从子模块编）、KEEP=1 留中间产物
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")/.." && pwd)
-SRC=${RISCVC_SRC:-$HERE/../../../riscvc}
+SRC=${RISCVC_SRC:-$HERE/riscvc}
 LV=${1:-O2}
 MARCH=${MARCH:-rv32imf_zicsr}
 TARGET=riscv32imafc-unknown-none-elf
-RISCVC=${RISCVC:-$(command -v riscvc || true)}
-[ -n "$RISCVC" ] || { cargo +1.98.1 install -q riscvc --version =0.2.5; RISCVC=$(command -v riscvc); }
+[ -f "$SRC/Cargo.toml" ] || { echo "没有 riscvc 源码：git submodule update --init compiler/rustc_codegen_riscvc/riscvc" >&2; exit 1; }
+if [ -z "${RISCVC:-}" ]; then
+  cargo +1.98.1 build -q --release --manifest-path "$SRC/Cargo.toml" --bin riscvc
+  RISCVC=$SRC/target/release/riscvc
+fi
 (cd "$HERE" && cargo build -q --release)
 (cd "$HERE/tools/run-elf" && cargo build -q --release)
 BE=$HERE/target/release/librustc_codegen_riscvc.so

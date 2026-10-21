@@ -47,3 +47,6 @@
 	path = src/gcc
 	url = https://github.com/rust-lang/gcc.git
 	shallow = true
+[submodule "compiler/rustc_codegen_riscvc/riscvc"]
+	path = compiler/rustc_codegen_riscvc/riscvc
+	url = https://github.com/Jabberwocky238/riscvc.git

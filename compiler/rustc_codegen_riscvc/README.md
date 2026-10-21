@@ -1,6 +1,8 @@
 # rustc_codegen_riscvc
 
-rustc 的代码生成后端：MIR ⇒ rustc_codegen_ssa ⇒ [riscvc](https://crates.io/crates/riscvc) 的内部 IR ⇒ RV32 汇编 ⇒ 目标文件。⛔ 不经 LLVM。
+rustc 的代码生成后端：MIR ⇒ rustc_codegen_ssa ⇒ [riscvc](https://github.com/Jabberwocky238/riscvc) 的内部 IR ⇒ RV32 汇编 ⇒ 目标文件。⛔ 不经 LLVM。
+
+riscvc 是子模块 `riscvc/`（钉在 tag `v0.2.5`），后端与 `tools/run-elf` 按路径依赖它。
 
 ## 构建
 
@@ -8,6 +10,7 @@ rustc 的代码生成后端：MIR ⇒ rustc_codegen_ssa ⇒ [riscvc](https://cra
 （`rustc-dev`、`rust-src`），`.cargo/config.toml` 用 `RUSTC_BOOTSTRAP=1` 打开 `rustc_private`。
 
 ```bash
+git submodule update --init compiler/rustc_codegen_riscvc/riscvc   # 在 rust 仓库根目录
 cargo build --release            # ⇒ target/release/librustc_codegen_riscvc.so
 ```
 
@@ -43,4 +46,4 @@ MARCH=rv32imafd_zicsr tools/selfcheck.sh O2    # 开 D：+d、ilp32d 的 target 
 
 riscvc 仓库的 `tests/rust/examples/selfcheck`（自检程序）连同 core、compiler_builtins、运行时 `rvrt` 全由本后端编，
 `riscvc ld` 链接后在 riscvc 的指令级模拟器里从 `_start` 跑到 `ebreak`：a0 = 失败的检查个数，0 才过。
-要 riscvc 源码（`RISCVC_SRC`，缺省与 rust 检出同级的 `../riscvc`）与 riscvc 命令（没有就 `cargo install riscvc --version =0.2.5`）。
+riscvc 的源码（自检程序、运行时）与 `riscvc` 命令（as / ld）都取自子模块；`RISCVC_SRC` / `RISCVC` 可改。

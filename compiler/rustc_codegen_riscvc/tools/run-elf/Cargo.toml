@@ -6,6 +6,6 @@ edition = "2024"
 publish = false
 
 [dependencies]
-riscvc = "=0.2.5"
+riscvc = { path = "../../riscvc", version = "=0.2.5" }
 
 [workspace]

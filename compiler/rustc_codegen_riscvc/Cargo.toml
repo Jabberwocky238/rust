@@ -8,8 +8,11 @@ publish = false
 crate-type = ["dylib"]
 
 [dependencies]
-riscvc = "=0.2.5"
+# 子模块 riscvc/（GitHub Jabberwocky238/riscvc，钉在 tag v0.2.5）
+riscvc = { path = "riscvc", version = "=0.2.5" }
 
-# 独立 workspace（同源码树里的 cg_gcc / cg_clif）：⛔ 并进 compiler/ 的 workspace
+# 独立 workspace（同源码树里的 cg_gcc / cg_clif）：⛔ 并进 compiler/ 的 workspace。
+# 子模块 riscvc/ 自己是 workspace 根，排除在外（否则 cargo 认成本 workspace 的成员、报两个根）
 [workspace]
+exclude = ["riscvc"]
 
