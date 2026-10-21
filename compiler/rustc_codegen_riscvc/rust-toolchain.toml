@@ -1,0 +1,4 @@
+# 后端 dylib 与 rustc 的内部 API 绑死：只能用同一版本的 rustc（本分支基于 1.98.1）编、也只能被它加载
+[toolchain]
+channel = "1.98.1"
+components = ["rustc-dev", "rust-src"]

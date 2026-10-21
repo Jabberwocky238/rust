@@ -1,0 +1,11 @@
+# 在 riscvc 的指令级模拟器里跑一个 ELF：从 0x10000 跑到停下，打印 a0（selfcheck.sh 用）
+[package]
+name = "run-elf"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+riscvc = "=0.2.5"
+
+[workspace]

@@ -1,0 +1,3 @@
+# rustc_private 是 unstable 特性：stable 1.98.1 上靠 RUSTC_BOOTSTRAP 打开（[env] 只给 cargo 起的 rustc）
+[env]
+RUSTC_BOOTSTRAP = "1"

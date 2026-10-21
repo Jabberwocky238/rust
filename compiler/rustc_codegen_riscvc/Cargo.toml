@@ -1,0 +1,15 @@
+[package]
+name = "rustc_codegen_riscvc"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+riscvc = "=0.2.5"
+
+# 独立 workspace（同源码树里的 cg_gcc / cg_clif）：⛔ 并进 compiler/ 的 workspace
+[workspace]
+
